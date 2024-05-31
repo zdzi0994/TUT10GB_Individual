@@ -294,6 +294,8 @@ class chara1{
     // if it moves vertical, change the direction when it touches the y boundary
 
     //check if chracter has collided with a boundry through boolean statements and play boingSound upon every collusion if the sound is on
+    //declare boolean variable stating that now nothing is collided
+    //declate collided var as true when x and y boundries are hit
    let collided = false;
     if (this.Horizontal) {
       if (this.x <= this.boundary.startX || this.x >= this.boundary.endX) {
@@ -307,7 +309,7 @@ class chara1{
       }
     }
 
-    // play sound upon collision but only if the sound is on
+    // play sound upon collision but only if the sound is on +  based on collided var 
     if (collided && soundOn) {
      bingSound.play();
    }
@@ -356,6 +358,8 @@ class chara2{
     noStroke();
 
     //rectangle with minor movement 
+    //change the color of the rectanlge depending on level of amplitude
+    //change the growth of the rectangle stroke depending on the level of the amplitude 
     fill(68 * (level* width), 105, 186);
     stroke(`#4469BA`); 
     strokeWeight(3 * level);
