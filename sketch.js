@@ -7,9 +7,10 @@ let lineSpacing = 10;
 
 let boingSound; 
 let bingSound;
+let song;
 let button;
-let slider; 
 let soundOn = false; // variable to track if sound should be played
+let level;
 
 
 // character blocks variable settings
@@ -22,8 +23,6 @@ let blue;
 let beige;
 let red;
 
-let randomColors;
-let level;
 
 
 //loading all necessary sounds
