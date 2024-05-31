@@ -5,6 +5,7 @@ let lineRectangles = [];
 let drawRectangles = true;
 let lineSpacing = 10;
 
+//declaring variables that are being used for the code to interact with sound
 let boingSound; 
 let bingSound;
 let song;
@@ -27,7 +28,7 @@ let red;
 
 //loading all necessary sounds
 //loading sound for chracter interaction with boundries
-
+//loading backgound music for size chaning in shapes
 function preload() {
   boingSound = loadSound("assets/boingSound.mp3");
   bingSound = loadSound("assets/bingSound.mp3");
@@ -37,6 +38,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  //initialising the p5.js function to get the amplitude from the outputted sound
   amplitude = new p5.Amplitude();
 
   let numRectanglesWidth = width/25;
@@ -46,14 +48,11 @@ function setup() {
 
   //add a button to play/pause the audio
   button = createButton('Play/Pause');
-  //set position of button to bottom center
+  //set styles for the button
   button.position((width - button.width) / 6, (height - button.height) / 8 * 7 + 20);
   button.size(80, 40);
   //this is where we pass the function we want to run when the betton is clicked
   button.mousePressed(play_pause);
-
-  //add slider to control the size of line segments reaction to level of amplitude
-  slider = createSlider (8, 10, 10, 2);
 
 
   // Create a colors scheme for the rectangles in grid
@@ -143,6 +142,7 @@ function setup() {
 function play_pause() {
 
   // variable that controls weather sound is on or off
+  //use of a booleon varaible to distinish actions 
   soundOn = !soundOn; 
   if (soundOn) {
     song.play();
@@ -162,8 +162,7 @@ function play_pause() {
 function draw() {
   background(230, 213, 190);
 
-  level = amplitude.getLevel();
-  console.log(level);
+
 
   // draw the grid made up of rectangles
   if (drawRectangles) {
@@ -172,11 +171,16 @@ function draw() {
     }
   }
 
+  //create a variable to store the continuously updating amplitude
+  level = amplitude.getLevel();
 
-  //set the volume of different audio 
+  //set the volume of different audio to make sound effects heard but not overpowering, plus to smooth differences between the 3 audios
   bingSound.setVolume(0.3);
   boingSound.setVolume(0.2);
   song.setVolume(0.5);
+
+
+
   // draw each character block
   for(let chara of charaBlocks){
     chara.move();
@@ -199,12 +203,14 @@ class Rectangle {
   }
 
   draw() {
+
+    //reinitionalise collecting amplitude into level var as this is a seprate draw function
     level = amplitude.getLevel();
-    console.log(level);
 
     fill(this.color);
 
-    let levelGrowth = slider.value();
+    //Apply the level var with aplitude stored inside to control the growth of rects in line segments depending on amplitude
+    //declare if/else statement using boolean from play/pause button to control the growth of the rectangles depending on sound on/off
     if (soundOn) {
       rect(this.x, this.y, this.width * level * 2, this.height * level * 2);
 
@@ -350,7 +356,7 @@ class chara2{
     noStroke();
 
     //rectangle with minor movement 
-    fill(68, 105, 186);
+    fill(68 * (level* width), 105, 186);
     stroke(`#4469BA`); 
     strokeWeight(3 * level);
 
